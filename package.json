@@ -1,0 +1,30 @@
+{
+	"name": "@singularpixel/.com",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@quasar/extras": "^1.16.9",
+		"pinia": "^2.1.7",
+		"quasar": "^2.14.2",
+		"vue": "^3.4.15",
+		"vue-router": "^4.2.5"
+	},
+	"devDependencies": {
+		"@quasar/vite-plugin": "^1.6.0",
+		"@rushstack/eslint-patch": "^1.7.0",
+		"@vitejs/plugin-vue": "^5.0.3",
+		"@vue/eslint-config-prettier": "^9.0.0",
+		"eslint": "^9.7.0",
+		"eslint-plugin-vue": "^9.20.1",
+		"prettier": "^3.2.4",
+		"sass": "^1.70.0",
+		"vite": "^5.0.11"
+	}
+}
