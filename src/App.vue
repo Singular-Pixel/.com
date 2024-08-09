@@ -4,7 +4,7 @@
 			<RouterView id="View" />
 		</QPageContainer>
 		<QFooter elevated class="bg-dark">
-			<div class="text-caption text-center titleFont">© 2024 Singular Pixel LLC. All Rights Reserved.</div>
+			<div class="text-caption text-center">© 2024 Singular Pixel LLC. All Rights Reserved.</div>
 		</QFooter>
 	</QLayout>
 </template>

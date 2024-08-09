@@ -13,7 +13,7 @@ $sp-brightblue: #00B0FF;
 
 /*#region Fonts*/
 @mixin corefont() {
-	font-family: "Inter", sans-serif !important;
+	font-family: "Poppins", sans-serif !important;
 }
 @mixin titlefont() {
 	font-family: "Jura", sans-serif !important;
@@ -33,6 +33,6 @@ $negative: $red;
 $info: $sp-brightblue;
 $warning: $yellow;
 
-$typography-font-family: "Inter", sans-serif !default;
+$typography-font-family: "Poppins", sans-serif !default;
 $text-weights: (thin: 100, light: 200, regular: 400, medium: 600, bold: 800, bolder: 900) !default;
 /*#endregion*/

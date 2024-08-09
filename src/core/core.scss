@@ -8,29 +8,29 @@
 }
 
 @font-face {
-	font-family: "Inter";
-	src: url(../assets/fonts/Inter-Light.woff) format('woff');
+	font-family: "Poppins";
+	src: url(../assets/fonts/Poppins-Light.woff) format('woff');
 	font-style: normal;
 	font-weight: 200;
 	font-display: swap;
 }
 @font-face {
-	font-family: "Inter";
-	src: url(../assets/fonts/Inter-Regular.woff) format('woff');
+	font-family: "Poppins";
+	src: url(../assets/fonts/Poppins-Regular.woff) format('woff');
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
 }
 @font-face {
-	font-family: "Inter";
-	src: url(../assets/fonts/Inter-Medium.woff) format('woff');
+	font-family: "Poppins";
+	src: url(../assets/fonts/Poppins-Medium.woff) format('woff');
 	font-style: normal;
 	font-weight: 600;
 	font-display: swap;
 }
 @font-face {
-	font-family: "Inter";
-	src: url(../assets/fonts/Inter-Bold.woff) format('woff');
+	font-family: "Poppins";
+	src: url(../assets/fonts/Poppins-Bold.woff) format('woff');
 	font-style: normal;
 	font-weight: 800;
 	font-display: swap;
@@ -111,6 +111,33 @@ svg {
 .titleFont {
 	@include titlefont();
 	font-weight: 800;
+}
+
+.text-heading {
+	@include titlefont();
+	font-weight: 800;
+	font-size: 3rem;
+	line-height: 1.2em;
+}
+.text-subheading {
+	@include titlefont();
+	font-weight: 800;
+	font-size: 1.5rem;
+	line-height: 1.2em;
+}
+.text-body {
+	@include corefont();
+	font-weight: 400;
+	font-size: 1rem;
+	letter-spacing: .03125em;
+	line-height: 1.2em;
+}
+.text-caption {
+	@include titlefont();
+	font-weight: 800;
+	font-size: .75rem;
+	letter-spacing: .03333em;
+	line-height: 1.2em;
 }
 /*#endregion*/
 
