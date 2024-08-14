@@ -6,10 +6,11 @@
 		-->
 
 		<HeroHexGrid :show="true" :debug="debug" />
-		<div class="q-pa-xl row justify-center">
+		
+		<div class="q-pa-lg row justify-center">
 			<div class="gt-sm col-auto"></div>
 			<div class="col-xs-12 col-md-8 flexCenter vert">
-				<QImg id="logo" src="@/assets/images/Logo-Vert-OnDark.svg" no-spinner />
+				
 			</div>
 			<div class="gt-sm col-auto"></div>
 		</div>
@@ -22,7 +23,7 @@ import { onMounted, nextTick } from 'vue';
 import HeroHexGrid from '@/components/HeroHexGrid.vue';
 
 let debug = {
-	controls: true,
+	controls: false,
 	axis: false,
 	lights: false
 };
@@ -60,10 +61,6 @@ function Init() {
 		left: 0;
 		width: 100%;
 		height: 2px;
-	}
-
-	#logo {
-		max-width: 640px;
 	}
 }
 </style>
