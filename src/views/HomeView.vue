@@ -38,7 +38,7 @@ function Init() {
 </script>
 
 <style lang="scss">
-@import '@/core/globals';
+@use '@/core/globals' as *;
 
 #View[data-view="Home"] {
 

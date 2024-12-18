@@ -2,24 +2,17 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
+import vueDevTools from 'vite-plugin-vue-devtools';
+import { quasar } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	css: {
-		preprocessorOptions: {
-			scss: {
-				quietDeps: true
-			}
-		}
-	},
 	plugins: [
-		vue({
-			template: { transformAssetUrls }
-		}),
+		vue(),
+		vueDevTools(),
 		quasar({
 			autoImportComponentCase: 'pascal',
-			sassVariables: 'src/core/globals.scss'
+			sassVariables: fileURLToPath(new URL('./src/core/globals.scss', import.meta.url))
 		})
 	],
 	resolve: {

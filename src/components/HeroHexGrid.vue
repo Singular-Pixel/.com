@@ -6,7 +6,8 @@
 	<div id="btnExplore" class="q-pa-xl flexCenter vert canHide" @click="Explore">
 		<QIcon v-if="$q.platform.is.mobile" name="mdi-gesture-tap" size="64px" />
 		<QIcon v-if="$q.platform.is.desktop" name="mdi-cursor-default-click" size="64px" />
-		<span class="text-subheading">explore</span>
+		<span v-if="$q.platform.is.mobile" class="text-heading">tap to explore</span>
+		<span v-if="$q.platform.is.desktop" class="text-heading">click to explore</span>
 	</div>
 </template>
 
@@ -379,6 +380,18 @@ function Explore() {
 		top: 50%;
 		left: 50%;
 
-		transform: translate(-50%, -48px);
+		cursor: pointer;
+
+		background: rgba($black, 0.5);
+		border-radius: 24px;
+
+		transform: translate(-50%, -50%);
+
+		span {
+			width: 100%;
+
+			font-size: 2rem;
+			text-align: center;
+		}
 	}
 </style>

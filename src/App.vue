@@ -22,9 +22,9 @@ function Init() {
 </script>
 
 <style lang="scss">
-@import '@quasar/extras/mdi-v7/mdi-v7.css';
-@import 'quasar/src/css/index.sass';
+@use '@quasar/extras/mdi-v7/mdi-v7.css';
+@use 'quasar/src/css/index.sass';
 
-@import '@/core/globals';
-@import '@/core/core';
+@use '@/core/globals' as *;
+@use '@/core/core';
 </style>
