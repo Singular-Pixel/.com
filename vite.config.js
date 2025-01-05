@@ -2,14 +2,14 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueDevTools from 'vite-plugin-vue-devtools';
+//import vueDevTools from 'vite-plugin-vue-devtools';
 import { quasar } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
 		vue(),
-		vueDevTools(),
+//		vueDevTools(),
 		quasar({
 			autoImportComponentCase: 'pascal',
 			sassVariables: fileURLToPath(new URL('./src/core/globals.scss', import.meta.url))

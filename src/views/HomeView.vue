@@ -5,7 +5,7 @@
 		<div id="centerX"></div>
 		-->
 
-		<HeroHexGrid :show="true" :debug="debug" />
+		<HeroHexGrid :show="true" :debug="debug" @heroFinished="StartContent" />
 		
 		<div class="q-pa-lg row justify-center">
 			<div class="gt-sm col-auto"></div>
@@ -33,6 +33,10 @@ onMounted(() => {
 });
 
 function Init() {
+	
+}
+
+function StartContent() {
 	
 }
 </script>

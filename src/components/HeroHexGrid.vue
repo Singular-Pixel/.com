@@ -32,6 +32,8 @@ let props = defineProps({
 	}
 });
 
+let emit = defineEmits(['heroFinished']);
+
 let canvas = ref(null);
 let parent = null;
 
@@ -60,6 +62,7 @@ let objGroup = null;
 let centerHex = null;
 let hexRings = [];
 
+let renderRequested = false;
 let animatingOut = false;
 
 watch(
@@ -79,12 +82,13 @@ function Init() {
 	Resized();
 	window.addEventListener('resize', core.Debounce(() => {
 		Resized();
+		RequestRender();
 	}, 200));
 
 	SetupScene();
 	SetupLights();
 	SetupObjects();
-	StartRendering();
+	RequestRender();
 
 	SetVisibility(props.show);
 }
@@ -258,18 +262,26 @@ function SetupObjects() {
 		}
 	}
 }
-function StartRendering() {
-	const RenderFrame = () => {
-		if (camera && renderer && rendering.value) {
+function RenderFrame() {
+	renderRequested = false;
 
-			if (props.debug && controls) {
-				controls.update();
-			}
-			renderer.render(scene, camera);
+	if (camera && renderer && rendering.value) {
+		if (props.debug && controls) {
+			controls.update();
 		}
+		renderer.render(scene, camera);
+	}
+
+	if (animatingOut) {
+		renderRequested = true;
 		requestAnimationFrame(RenderFrame);
-	};
-	requestAnimationFrame(RenderFrame);
+	}
+}
+function RequestRender() {
+	if (!renderRequested) {
+		renderRequested = true;
+		requestAnimationFrame(RenderFrame);
+	}
 }
 
 function HexAt(x, z) {
@@ -360,6 +372,14 @@ function Explore() {
 
 		offset += 0.05;
 	});
+	offset += 0.5;
+
+	RequestRender();
+
+	setTimeout(() => {
+		animatingOut = false;
+		emit('heroFinished');
+	}, offset * 1000);
 }
 </script>
 
