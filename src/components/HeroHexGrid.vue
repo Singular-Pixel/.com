@@ -112,7 +112,7 @@ function SetVisibility(show) {
 			overwrite: 'auto'
 		});
 		gsap.to(canvas.value, {
-			opacity: 1,
+			opacity: 0.5,
 			duration: 0.5,
 			overwrite: 'auto',
 			ease: 'none'
@@ -191,8 +191,8 @@ function SetupLights() {
 	scene.add(white);
 
 	if (props.debug?.lights) {
-		let blueHelper = new THREE.PointLightHelper(blue);
-		scene.add(blueHelper);
+		let whiteHelper = new THREE.PointLightHelper(white);
+		scene.add(whiteHelper);
 	}
 }
 function SetupObjects() {
@@ -313,6 +313,12 @@ function Explore() {
 
 	let offset = 0;
 
+	gsap.to(canvas.value, {
+		opacity: 1,
+		duration: 0.25,
+		ease: 'none'
+	});
+
 	gsap.timeline({
 		defaults: {
 			ease: 'power2.inOut'
@@ -402,7 +408,7 @@ function Explore() {
 
 		cursor: pointer;
 
-		background: rgba($black, 0.5);
+		//background: rgba($black, 0.5);
 		border-radius: 24px;
 
 		transform: translate(-50%, -50%);

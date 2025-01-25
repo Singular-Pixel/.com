@@ -3,14 +3,16 @@
 		<QPageContainer>
 			<RouterView id="View" />
 		</QPageContainer>
-		<QFooter elevated class="bg-dark">
-			<div class="text-caption text-center">© 2024 Singular Pixel LLC. All Rights Reserved.</div>
+		<QFooter id="Footer" class="bg-dark shadow-up-10">
+			<div class="text-caption text-center">© {{year}} Singular Pixel LLC. All Rights Reserved.</div>
 		</QFooter>
 	</QLayout>
 </template>
 
 <script setup>
-import { onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
+
+let year = ref(new Date().getFullYear());
 
 onMounted(() => {
 	nextTick(Init);

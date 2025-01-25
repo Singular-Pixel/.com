@@ -114,6 +114,23 @@ svg {
 	@include titlefont();
 	font-weight: 800;
 }
+.coreFont {
+	@include corefont();
+	font-weight: 400;
+}
+
+.text-hero {
+	@include corefont();
+	font-weight: 800;
+	font-size: 4rem;
+	line-height: 1.3em;
+}
+.text-herosubheading {
+	@include corefont();
+	font-weight: 400;
+	font-size: 2rem;
+	line-height: 1.2em;
+}
 
 .text-heading {
 	@include titlefont();
@@ -181,5 +198,92 @@ body {
 	height: 100%;
 
 	overflow: auto;
+}
+/*#endregion*/
+
+/*#region Quasar*/
+.text-primary {
+	color: $sp-brightblue !important;
+}
+.bg-primary {
+	background: $sp-brightblue !important;
+}
+.text-secondary {
+	color: $sp-blue !important;
+}
+.bg-secondary {
+	background: $sp-blue !important;
+}
+
+.text-dark {
+	color: $black !important;
+}
+.bg-dark {
+	background: $black !important;
+}
+.text-positive {
+	color: $green !important;
+}
+.bg-positive {
+	background: $green !important;
+}
+.text-negative {
+	color: $red !important;
+}
+.bg-negative {
+	background: $red !important;
+}
+.text-info {
+	color: $sp-brightblue !important;
+}
+.bg-info {
+	background: $sp-brightblue !important;
+}
+.text-warning {
+	color: $yellow !important;
+}
+.bg-warning {
+	background: $yellow !important;
+}
+
+.text-white {
+	color: $white !important;
+}
+.bg-white {
+	background: $white !important;
+}
+.text-grey {
+	color: $grey !important;
+}
+.bg-grey {
+	background: $grey !important;
+}
+.text-black {
+	color: $black !important;
+}
+.bg-black {
+	background: $black !important;
+}
+.text-green {
+	color: $green !important;
+}
+.bg-green {
+	background: $green !important;
+}
+.text-yellow {
+	color: $yellow !important;
+}
+.bg-yellow {
+	background: $yellow !important;
+}
+.text-red {
+	color: $red !important;
+}
+.bg-red {
+	background: $red !important;
+}
+
+.q-mt-xxl {
+	margin-top: 96px;
 }
 /*#endregion*/
