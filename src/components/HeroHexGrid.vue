@@ -86,7 +86,6 @@ function Init() {
 		SetRayPosition(evt);
 	}, 50), { signal: abortController.signal });
 	parent.addEventListener('touchstart', (evt) => {
-		evt.preventDefault();
 		SetRayPosition(evt.touches[0]);
 	}, {
 		passive: false,
@@ -98,7 +97,7 @@ function Init() {
 	parent.addEventListener('mouseout', ClearRayPosition, { signal: abortController.signal });
 	parent.addEventListener('mouseleave', ClearRayPosition, { signal: abortController.signal });
 	parent.addEventListener('touchend', ClearRayPosition, { signal: abortController.signal });
-	canvas.value.addEventListener('click', SelectPickedObject, { signal: abortController.signal });
+	parent.addEventListener('click', SelectPickedObject, { signal: abortController.signal });
 
 	StartRendering();
 }
@@ -248,6 +247,26 @@ function SetupObjects() {
 		}
 	}
 }
+
+function HexAt(x, z, name = "") {
+	let obj = new THREE.Mesh(
+		new THREE.CylinderGeometry(0.5, 0.5, 0.05, 6),
+		new THREE.MeshStandardMaterial({
+			color: new THREE.Color(0x262626),
+			opacity: 1,
+			transparent: true
+		})
+	);
+	obj.name = name;
+	obj.castShadow = true;
+	obj.receiveShadow = true;
+	obj.position.set(x, 0, z);
+	scene.add(obj);
+	objGroup.add(obj);
+
+	return obj;
+}
+
 function RenderFrame() {
 	if (camera && renderer && rendering.value) {
 		if (props.debug && controls) {
@@ -273,25 +292,6 @@ function StartRendering() {
 	AnimateIn();
 
 	requestAnimationFrame(RenderFrame);
-}
-
-function HexAt(x, z, name = "") {
-	let obj = new THREE.Mesh(
-		new THREE.CylinderGeometry(0.5, 0.5, 0.05, 6),
-		new THREE.MeshStandardMaterial({
-			color: new THREE.Color(0x262626),
-			opacity: 1,
-			transparent: true
-		})
-	);
-	obj.name = name;
-	obj.castShadow = true;
-	obj.receiveShadow = true;
-	obj.position.set(x, 0, z);
-	scene.add(obj);
-	objGroup.add(obj);
-
-	return obj;
 }
 
 function CastRay() {
