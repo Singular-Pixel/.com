@@ -1,18 +1,11 @@
 <template>
-	<canvas ref="canvas" class="fillParent"></canvas>
+	<canvas id="heroCanvas" ref="canvas" class="fillParent"></canvas>
 
 	<QImg id="heroLogo" class="canHide" src="@/assets/images/Logo-Vert-OnDark.svg" fit="contain" position="center center" no-spinner />
-
-	<div id="btnExplore" class="q-pa-xl flexCenter vert canHide" @click="Explore">
-		<QIcon v-if="$q.platform.is.mobile" name="mdi-gesture-tap" size="64px" />
-		<QIcon v-if="$q.platform.is.desktop" name="mdi-cursor-default-click" size="64px" />
-		<span v-if="$q.platform.is.mobile" class="text-heading">tap to explore</span>
-		<span v-if="$q.platform.is.desktop" class="text-heading">click to explore</span>
-	</div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, nextTick } from 'vue';
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import gsap from 'gsap';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -20,11 +13,6 @@ import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUnifo
 import core from '@/core/index';
 
 let props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-		default: false
-	},
 	debug: {
 		type: Object,
 		required: false,
@@ -39,12 +27,18 @@ let parent = null;
 
 let rendering = ref(false);
 
+let abortController = new AbortController();
+
 let canvasWidth = 1920;
 let canvasHeight = 1080;
 let renderer = null;
 let scene = null;
 let camera = null;
 let controls = null;
+
+let allowPicking = false;
+let raycaster = null;
+let pickedObj = null;
 
 let startPos = {
 	x: -2.59,
@@ -56,44 +50,60 @@ let startLookAt = {
 	y: 1.16,
 	z: 0.17
 };
+let rayPosition = {
+	x: -1000000,
+	y: -1000000
+};
 
 let objGroup = null;
 
 let centerHex = null;
 let hexRings = [];
 
-let renderRequested = false;
-let animatingOut = false;
-
-watch(
-	() => props.show,
-	(show) => {
-		SetVisibility(show);
-	}
-);
+let highlightAnim = null;
 
 onMounted(() => {
 	nextTick(Init);
+});
+onBeforeUnmount(() => {
+	rendering.value = false;
+	abortController.abort();
 });
 
 function Init() {
 	parent = canvas.value.parentNode;
 
-	Resized();
+	CanvasResized();
 	window.addEventListener('resize', core.Debounce(() => {
-		Resized();
-		RequestRender();
-	}, 200));
+		CanvasResized();
+	}, 200), { signal: abortController.signal });
 
 	SetupScene();
 	SetupLights();
 	SetupObjects();
-	RequestRender();
 
-	SetVisibility(props.show);
+	parent.addEventListener('mousemove', core.Throttle((evt) => {
+		SetRayPosition(evt);
+	}, 50), { signal: abortController.signal });
+	parent.addEventListener('touchstart', (evt) => {
+		evt.preventDefault();
+		SetRayPosition(evt.touches[0]);
+	}, {
+		passive: false,
+		signal: abortController.signal
+	});
+	parent.addEventListener('touchmove', (evt) => {
+		SetRayPosition(evt.touches[0]);
+	}, { signal: abortController.signal });
+	parent.addEventListener('mouseout', ClearRayPosition, { signal: abortController.signal });
+	parent.addEventListener('mouseleave', ClearRayPosition, { signal: abortController.signal });
+	parent.addEventListener('touchend', ClearRayPosition, { signal: abortController.signal });
+	canvas.value.addEventListener('click', SelectPickedObject, { signal: abortController.signal });
+
+	StartRendering();
 }
 
-function Resized() {
+function CanvasResized() {
 	canvasWidth = parent.offsetWidth;
 	canvasHeight = parent.offsetHeight;
 
@@ -102,32 +112,6 @@ function Resized() {
 		camera.updateProjectionMatrix();
 
 		renderer.setSize(canvasWidth, canvasHeight, false);
-	}
-}
-
-function SetVisibility(show) {
-	if (show) {
-		gsap.set(canvas.value, {
-			opacity: 0,
-			overwrite: 'auto'
-		});
-		gsap.to(canvas.value, {
-			opacity: 0.5,
-			duration: 0.5,
-			overwrite: 'auto',
-			ease: 'none'
-		});
-		rendering.value = true;
-	} else {
-		gsap.to(canvas.value, {
-			opacity: 0,
-			duration: 0.5,
-			overwrite: 'auto',
-			ease: 'none',
-			onComplete: () => {
-				rendering.value = false;
-			}
-		});
 	}
 }
 
@@ -153,6 +137,8 @@ function SetupScene() {
 	camera.position.set(startPos.x, startPos.y, startPos.z);
 	camera.lookAt(startLookAt.x, startLookAt.y, startLookAt.z);
 	scene.add(camera);
+
+	raycaster = new THREE.Raycaster();
 
 	if (props.debug?.controls) {
 		controls = new OrbitControls(camera, renderer.domElement);
@@ -203,7 +189,7 @@ function SetupObjects() {
 	objGroup = new THREE.Group();
 	scene.add(objGroup);
 
-	centerHex = HexAt(0, 0);
+	centerHex = HexAt(0, 0, "center");
 
 	for (let ring = 1; ring < 17; ring++) {
 		let hex = null;
@@ -263,36 +249,42 @@ function SetupObjects() {
 	}
 }
 function RenderFrame() {
-	renderRequested = false;
-
 	if (camera && renderer && rendering.value) {
 		if (props.debug && controls) {
 			controls.update();
 		}
+
+		if (allowPicking) {
+			CastRay();
+		} else {
+			ClearRayPosition();
+		}
+
 		renderer.render(scene, camera);
 	}
 
-	if (animatingOut) {
-		renderRequested = true;
+	if (rendering.value) {
 		requestAnimationFrame(RenderFrame);
 	}
 }
-function RequestRender() {
-	if (!renderRequested) {
-		renderRequested = true;
-		requestAnimationFrame(RenderFrame);
-	}
+function StartRendering() {
+	rendering.value = true;
+
+	AnimateIn();
+
+	requestAnimationFrame(RenderFrame);
 }
 
-function HexAt(x, z) {
+function HexAt(x, z, name = "") {
 	let obj = new THREE.Mesh(
 		new THREE.CylinderGeometry(0.5, 0.5, 0.05, 6),
 		new THREE.MeshStandardMaterial({
-			color: "#262626",
+			color: new THREE.Color(0x262626),
 			opacity: 1,
 			transparent: true
 		})
 	);
+	obj.name = name;
 	obj.castShadow = true;
 	obj.receiveShadow = true;
 	obj.position.set(x, 0, z);
@@ -302,22 +294,138 @@ function HexAt(x, z) {
 	return obj;
 }
 
-function Explore() {
-	let piDiv180 = (3.14159 / 180);
+function CastRay() {
+	if (pickedObj !== null) {
+		pickedObj.material.opacity = 0.5;
+		pickedObj = null;
+	}
 
-	if (animatingOut) return;
-	animatingOut = true;
+	raycaster.setFromCamera(rayPosition, camera);
 
-	document.getElementById('heroLogo').classList.add('hide');
-	document.getElementById('btnExplore').classList.add('hide');
+	let intersectedObjects = raycaster.intersectObjects(scene.children);
+	if (intersectedObjects.length) {
+		pickedObj = intersectedObjects[0].object;
+		pickedObj.material.opacity = 1;
+	}
+}
+function SetRayPosition(evt) {
+	let rect = canvas.value.getBoundingClientRect();
 
+	rayPosition.x = ((evt.clientX - rect.left) / canvasWidth) * 2 - 1;
+	rayPosition.y = -((evt.clientY - rect.top) / canvasHeight) * 2 + 1;
+}
+function ClearRayPosition() {
+	rayPosition.x = -1000000;
+	rayPosition.y = -1000000;
+}
+
+function SelectPickedObject() {
+	if ((pickedObj !== null) && (pickedObj.name === "center")) {
+		highlightAnim.kill();
+		highlightAnim = null;
+
+		//Stop highlighting the center hex
+		let grey = new THREE.Color(0x262626);
+		gsap.to(centerHex.material.color, {
+			r: grey.r,
+			g: grey.g,
+			b: grey.b,
+			duration: 0.25,
+			ease: 'none'
+		});
+		AnimateOut();
+	}
+}
+
+function AnimateIn() {
 	let offset = 0;
 
-	gsap.to(canvas.value, {
-		opacity: 1,
-		duration: 0.25,
-		ease: 'none'
+	//Go backwards through the rings toward the center hex
+	for (let idx = hexRings.length - 1; idx >= 0; idx--) {
+		let ring = hexRings[idx];
+		ring.forEach((hex) => {
+			gsap.set(hex.material, {
+				opacity: 0
+			});
+			gsap.set(hex.position, {
+				y: -0.1
+			});
+
+			gsap.to(hex.material, {
+				opacity: 0.5,
+				ease: 'none',
+				duration: 0.25,
+				delay: offset
+			});
+			gsap.to(hex.position, {
+				y: 0,
+				ease: 'none',
+				duration: 0.5,
+				delay: offset
+			});
+		});
+
+		offset += 0.075;
+	}
+
+	gsap.set(centerHex.material, {
+		opacity: 0
 	});
+	gsap.set(centerHex.position, {
+		y: -0.1
+	});
+
+	gsap.to(centerHex.material, {
+		opacity: 0.5,
+		ease: 'none',
+		duration: 0.5,
+		delay: offset
+	});
+	gsap.to(centerHex.position, {
+		y: 0,
+		ease: 'none',
+		duration: 0.5,
+		delay: offset
+	});
+
+	offset += 0.5;
+
+	//Start highlighting the center hex to indicate hitpoint
+	let blue = new THREE.Color(0x00B0FF);
+	let grey = new THREE.Color(0x262626);
+	
+	highlightAnim = gsap.timeline({
+		delay: offset,
+		repeat: -1,
+		yoyo: true,
+		defaults: {
+			duration: 1,
+			ease: 'none'
+		}
+	})
+	.to(centerHex.material.color, {
+		r: blue.r,
+		g: blue.g,
+		b: blue.b
+	})
+	.to(centerHex.material.color, {
+		r: grey.r,
+		g: grey.g,
+		b: grey.b
+	});
+
+	setTimeout(() => {
+		allowPicking = true;
+	}, offset * 1000);
+}
+function AnimateOut() {
+	let piDiv180 = (3.14159 / 180);
+
+	allowPicking = false;
+
+	document.getElementById('heroLogo').classList.add('hide');
+
+	let offset = 0;
 
 	gsap.timeline({
 		defaults: {
@@ -380,10 +488,15 @@ function Explore() {
 	});
 	offset += 0.5;
 
-	RequestRender();
+	gsap.to(canvas.value, {
+		opacity: 0,
+		ease: 'none',
+		duration: 0.25,
+		delay: offset
+	});
+	offset += 0.25;
 
 	setTimeout(() => {
-		animatingOut = false;
 		emit('heroFinished');
 	}, offset * 1000);
 }
@@ -399,25 +512,5 @@ function Explore() {
 		max-height: 30vh;
 
 		transform: translateX(-50%);
-	}
-
-	#btnExplore {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-
-		cursor: pointer;
-
-		//background: rgba($black, 0.5);
-		border-radius: 24px;
-
-		transform: translate(-50%, -50%);
-
-		span {
-			width: 100%;
-
-			font-size: 2rem;
-			text-align: center;
-		}
 	}
 </style>

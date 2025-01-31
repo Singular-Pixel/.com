@@ -7,7 +7,7 @@
 
 		<div id="bgGradient" class="fillParent canHide" :class="{ 'hide': showHero }"></div>
 
-		<HeroHexGrid :show="showHero" :debug="debug" @heroFinished="StartContent" />
+		<HeroHexGrid v-if="showHero" :debug="debug" @heroFinished="StartContent" />
 
 		<HexGlobe :show="!showHero" :debug="debug" />
 		
