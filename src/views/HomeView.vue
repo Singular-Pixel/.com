@@ -5,13 +5,13 @@
 		<div id="centerX"></div>
 		-->
 
-		<div id="bgGradient" class="fillParent canHide" :class="{ 'hide': showHero }"></div>
+		<div id="bgGradient" class="fillParent canHide" :class="{ 'hide' : showHexLanding }"></div>
 
-		<HeroHexGrid v-if="showHero" @heroFinished="StartContent" />
+		<HeroHexGrid v-if="showHexLanding" @heroFinished="StartContent" />
 
-		<HexGlobe v-if="!showHero" />
+		<HexGlobe v-if="!showHexLanding" />
 		
-		<div id="toolbarContainer" class="row justify-center" :class="{ 'show': !showHero }">
+		<div id="toolbarContainer" class="row justify-center" :class="{ 'show': !showHexLanding }">
 			<div class="gt-sm col-auto"></div>
 			<div class="col-xs-12 col-md-8 flexCenter">
 				<QToolbar id="toolbarContent" class="q-py-md">
@@ -30,46 +30,38 @@
 			<div class="gt-sm col-auto"></div>
 		</div>
 
-		<div v-if="!showHero" id="heroContent" class="scroll">
+		<div v-if="!showHexLanding && showContent" id="heroContent" class="scroll">
 			<div class="q-px-lg q-pb-lg row justify-center full-height">
 				<div class="gt-sm col-auto"></div>
 				<div class="col-xs-12 col-md-8 flexCenter vert">
-					<FadeInContainer :delay="2000">
-						<h1 class="q-mt-xl animatesToVisible text-hero text-center">Crafting custom solutions<br/>for your business</h1>
-					</FadeInContainer>
+					<h1 class="q-mt-xl text-hero text-center observe observerFadeInUp">Crafting custom web solutions<br/>for your business</h1>
 					<div class="q-mt-xl row justify-center">
 						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl">
-							<FadeInContainer :delay="2500">
-								<div class="hexContainer flexCenter vert">
-									<div class="hex flexCenter">
-										<QImg src="@/assets/images/HeroFeature-Web.webp" height="240px" fit="cover" position="center center" no-spinner />
-										<div class="hexBorder"></div>
-									</div>
-									<h2 class="text-herosubheading text-center">Websites &amp; Storefronts</h2>
+							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2200ms">
+								<div class="hex flexCenter">
+									<QImg src="@/assets/images/HeroFeature-Web.webp" height="240px" fit="cover" position="center center" no-spinner />
+									<div class="hexBorder"></div>
 								</div>
-							</FadeInContainer>
+								<h2 class="text-herosubheading text-center">Websites &amp; Storefronts</h2>
+							</div>
 						</div>
 						<div class="col-auto q-pa-xl q-mx-xl">
-							<FadeInContainer :delay="2250">
-								<div class="hexContainer flexCenter vert">
-									<div class="hex flexCenter">
-										<QImg src="@/assets/images/HeroFeature-Kiosk.webp" height="240px" fit="cover" position="center center" no-spinner />
-										<div class="hexBorder"></div>
-									</div>
-									<h2 class="text-herosubheading text-center">Kiosks &amp; Signage</h2>
+							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2000ms">
+								<div class="hex flexCenter">
+									<QImg src="@/assets/images/HeroFeature-Kiosk.webp" height="240px" fit="cover" position="center center" no-spinner />
+									<div class="hexBorder"></div>
 								</div>
-							</FadeInContainer>
+								<h2 class="text-herosubheading text-center">Kiosks &amp; Signage</h2>
+							</div>
 						</div>
 						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl">
-							<FadeInContainer :delay="2500">
-								<div class="hexContainer flexCenter vert">
-									<div class="hex flexCenter">
-										<QImg src="@/assets/images/HeroFeature-Experience.webp" height="240px" fit="cover" position="center center" no-spinner />
-										<div class="hexBorder"></div>
-									</div>
-									<h2 class="text-herosubheading text-center">Interactive Experiences</h2>
+							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2200ms">
+								<div class="hex flexCenter">
+									<QImg src="@/assets/images/HeroFeature-Experience.webp" height="240px" fit="cover" position="center center" no-spinner />
+									<div class="hexBorder"></div>
 								</div>
-							</FadeInContainer>
+								<h2 class="text-herosubheading text-center">Interactive Experiences</h2>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -91,7 +83,6 @@ import { ref, onMounted, nextTick } from 'vue';
 
 import HeroHexGrid from '@/components/HeroHexGrid.vue';
 import HexGlobe from '@/components/HexGlobe.vue';
-import FadeInContainer from '@/components/FadeInContainer.vue';
 
 let debug = {
 	controls: false,
@@ -99,20 +90,44 @@ let debug = {
 	lights: false
 };
 
-let showHero = ref(true);
+let showHexLanding = ref(true);
+let showContent = ref(false);
+
+let observer = null;
 
 onMounted(() => {
 	nextTick(Init);
 });
 
 function Init() {
-	
+	observer = new IntersectionObserver((entries, obs) => {
+		entries.map((ele) => {
+			if (ele.isIntersecting) {
+				obs.unobserve(ele.target);
+
+				ele.target.classList.add('show');
+			}
+		})
+	}, {
+		root: null,
+		rootMargin: '0px',
+		threshold: 0.25
+	});
 }
 
 function StartContent() {
-	showHero.value = false;
+	showHexLanding.value = false;
+	showContent.value = true;
 
-	
+	nextTick(() => {
+		document.querySelectorAll('.observe').forEach(ele => {
+			let delay = ele.getAttribute('data-observeDelay');
+			if (delay) {
+				ele.style.transitionDelay = delay;
+			}
+			observer.observe(ele);
+		});
+	});
 }
 </script>
 
