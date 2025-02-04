@@ -7,9 +7,9 @@
 
 		<div id="bgGradient" class="fillParent canHide" :class="{ 'hide': showHero }"></div>
 
-		<HeroHexGrid v-if="showHero" :debug="debug" @heroFinished="StartContent" />
+		<HeroHexGrid v-if="showHero" @heroFinished="StartContent" />
 
-		<HexGlobe :show="!showHero" :debug="debug" />
+		<HexGlobe v-if="!showHero" />
 		
 		<div id="toolbarContainer" class="row justify-center" :class="{ 'show': !showHero }">
 			<div class="gt-sm col-auto"></div>
