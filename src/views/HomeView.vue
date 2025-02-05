@@ -12,31 +12,31 @@
 		<HexGlobe v-if="!showHexLanding" />
 		
 		<div id="toolbarContainer" class="row justify-center" :class="{ 'show': !showHexLanding }">
-			<div class="gt-sm col-auto"></div>
-			<div class="col-xs-12 col-md-8 flexCenter">
+			<div class="gt-md col-auto"></div>
+			<div class="col-xs-12 col-lg-8 flexCenter">
 				<QToolbar id="toolbarContent" class="q-py-md">
 					<div class="toolbarLeft">
 						<QImg src="@/assets/images/Logo-Horiz-OnDark.svg" height="60px" fit="contain" position="left center" no-spinner />
 					</div>
-					<div class="toolbarCenter">
+					<div v-if="$q.screen.gt.sm" class="toolbarCenter">
 						<QBtn class="q-px-lg titleFont" size="18px" flat label="Services" />
 						<QBtn class="q-px-lg titleFont" size="18px" flat label="Platform" />
 					</div>
 					<div class="toolbarRight">
-						<QBtn class="q-px-xl titleFont" size="18px" color="secondary" label="Get&nbsp;Started" />
+						<QBtn class="q-px-xl titleFont" size="18px" color="secondary" :label="'Get' + (($q.screen.gt.sm) ? '&nbsp;': ' ') + 'Started'" />
 					</div>
 				</QToolbar>
 			</div>
-			<div class="gt-sm col-auto"></div>
+			<div class="gt-md col-auto"></div>
 		</div>
 
 		<div v-if="!showHexLanding && showContent" id="heroContent" class="scroll">
 			<div class="q-px-lg q-pb-lg row justify-center full-height">
-				<div class="gt-sm col-auto"></div>
-				<div class="col-xs-12 col-md-8 flexCenter vert">
-					<h1 class="q-mt-xl text-hero text-center observe observerFadeInUp">Crafting custom web solutions<br/>for your business</h1>
+				<div class="gt-md col-auto"></div>
+				<div class="col-xs-12 col-lg-8 flexCenter vert">
+					<h1 class="q-mt-xl q-px-md text-hero text-center observe observerFadeInUp">Crafting custom web solutions<br/>for your business</h1>
 					<div class="q-mt-xl row justify-center">
-						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl">
+						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl hexCol">
 							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2200ms">
 								<div class="hex flexCenter">
 									<QImg src="@/assets/images/HeroFeature-Web.webp" height="240px" fit="cover" position="center center" no-spinner />
@@ -45,7 +45,7 @@
 								<h2 class="text-herosubheading text-center">Websites &amp; Storefronts</h2>
 							</div>
 						</div>
-						<div class="col-auto q-pa-xl q-mx-xl">
+						<div class="col-auto q-pa-xl q-mx-xl hexCol">
 							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2000ms">
 								<div class="hex flexCenter">
 									<QImg src="@/assets/images/HeroFeature-Kiosk.webp" height="240px" fit="cover" position="center center" no-spinner />
@@ -54,7 +54,7 @@
 								<h2 class="text-herosubheading text-center">Kiosks &amp; Signage</h2>
 							</div>
 						</div>
-						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl">
+						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl hexCol">
 							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2200ms">
 								<div class="hex flexCenter">
 									<QImg src="@/assets/images/HeroFeature-Experience.webp" height="240px" fit="cover" position="center center" no-spinner />
@@ -65,7 +65,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="gt-sm col-auto"></div>
+				<div class="gt-md col-auto"></div>
 			</div>
 			<div class="q-px-lg row justify-center">
 				<div class="gt-sm col-auto"></div>
@@ -80,9 +80,12 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue';
+import { useQuasar } from 'quasar';
 
 import HeroHexGrid from '@/components/HeroHexGrid.vue';
 import HexGlobe from '@/components/HexGlobe.vue';
+
+const $q = useQuasar();
 
 let debug = {
 	controls: false,
@@ -186,6 +189,8 @@ function StartContent() {
 		}
 	}
 	#toolbarContent {
+		gap: 10px;
+
 		.toolbarLeft {
 			display: flex;
 			justify-content: flex-start;
@@ -200,6 +205,25 @@ function StartContent() {
 			display: flex;
 			justify-content: flex-end;
 			width: 100%;
+
+			body.screen--xs &,
+			body.screen--sm & {
+				width: 33%;
+
+				.q-btn {
+					padding-left: 12px;
+					padding-right: 12px;
+
+					line-height: 1.2;
+				}
+			}
+
+			body.screen--md & {
+				.q-btn {
+					padding-left: 24px;
+					padding-right: 24px;
+				}
+			}
 		}
 	}
 
@@ -212,6 +236,28 @@ function StartContent() {
 		overflow-x: hidden;
 
 		z-index: 100;
+	}
+
+	.text-hero {
+		body.screen--xs &,
+		body.screen--sm & {
+			margin-top: 0px;
+		}
+	}
+
+	.hexCol {
+		body.screen--xs &,
+		body.screen--sm & {
+			margin-left: 0px;
+			margin-right: 0px;
+			padding: 0px;
+		}
+		body.screen--md &,
+		body.screen--lg &{
+			margin-left: 8px;
+			margin-right: 8px;
+			padding: 16px;
+		}
 	}
 
 	.hexContainer {
@@ -254,6 +300,38 @@ function StartContent() {
 			&:hover {
 				.q-img {
 					opacity: 1;
+				}
+			}
+		}
+
+		body.screen--xs &,
+		body.screen--sm & {
+			width: 108px;
+
+			.hex {
+				height: 125px;
+
+				.q-img {
+					height: 120px;
+				}
+				.hexBorder {
+					height: 125px;
+				}
+			}
+		}
+
+		body.screen--md &,
+		body.screen--lg & {
+			width: 162px;
+
+			.hex {
+				height: 187.5px;
+
+				.q-img {
+					height: 180px;
+				}
+				.hexBorder {
+					height: 187.5px;
 				}
 			}
 		}

@@ -137,12 +137,30 @@ svg {
 	font-weight: 800;
 	font-size: 4rem;
 	line-height: 1.3em;
+
+	body.screen--xs &,
+	body.screen--sm & {
+		font-size: 2rem;
+	}
+	body.screen--md &,
+	body.screen--lg & {
+		font-size: 3rem;
+	}
 }
 .text-herosubheading {
 	@include corefont();
 	font-weight: 400;
 	font-size: 2rem;
 	line-height: 1.2em;
+
+	body.screen--xs &,
+	body.screen--sm & {
+		font-size: 1rem;
+	}
+	body.screen--md &,
+	body.screen--lg & {
+		font-size: 1.5rem;
+	}
 }
 
 .text-heading {
