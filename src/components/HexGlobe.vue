@@ -1,5 +1,5 @@
 <template>
-	<canvas id="globeCanvas" ref="canvas" class="fillParent"></canvas>
+	<canvas id="globeCanvas" ref="canvas" class="fixed-full"></canvas>
 </template>
 
 <script setup>

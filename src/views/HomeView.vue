@@ -30,11 +30,15 @@
 			<div class="gt-md col-auto"></div>
 		</div>
 
-		<div v-if="!showHexLanding && showContent" id="heroContent" class="scroll">
-			<div class="q-px-lg q-pb-lg row justify-center full-height">
+		<div v-if="!showHexLanding && showContent" id="contentContainer" class="scroll">
+			<div id="heroContent" class="q-px-lg q-pb-lg row justify-center full-height">
 				<div class="gt-md col-auto"></div>
 				<div class="col-xs-12 col-lg-8 flexCenter vert">
-					<h1 class="q-mt-xl q-px-md text-hero text-center observe observerFadeInUp">Crafting custom web solutions<br/>for your business</h1>
+					<h1 class="q-mt-xl q-px-md text-hero text-center">
+						<span class="observe observerFadeInUp" data-observeDelay="500ms">Crafting custom web solutions</span>
+						<br>
+						<span class="observe observerFadeInUp" data-observeDelay="1000ms">for your business</span>
+					</h1>
 					<div class="q-mt-xl row justify-center">
 						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl hexCol">
 							<div class="hexContainer flexCenter vert observe observerFadeInUp" data-observeDelay="2200ms">
@@ -67,9 +71,9 @@
 				</div>
 				<div class="gt-md col-auto"></div>
 			</div>
-			<div class="q-px-lg row justify-center">
+			<div id="servicesContent" class="q-px-lg row justify-center full-height">
 				<div class="gt-sm col-auto"></div>
-				<div class="col-xs-12 col-md-8 flexCenter vert">
+				<div class="col-xs-12 col-lg-8 flexCenter vert">
 					
 				</div>
 				<div class="gt-sm col-auto"></div>
@@ -227,7 +231,7 @@ function StartContent() {
 		}
 	}
 
-	#heroContent {
+	#contentContainer {
 		position: relative;
 		margin-top: 95px;
 		height: calc(100% - 95px - 14px);
@@ -261,7 +265,10 @@ function StartContent() {
 	}
 
 	.hexContainer {
+		position: relative;
 		width: 216.5px;
+		
+		cursor: pointer;
 
 		.hex {
 			position: relative;
@@ -269,9 +276,9 @@ function StartContent() {
 			aspect-ratio: cos(30deg);
 			clip-path: polygon(-50% 50%,50% 100%,150% 50%,50% 0);
 
-			cursor: pointer;
-
 			background: $sp-blue;
+
+			transition: transform 0.1s cubic-bezier(0.19, 1, 0.22, 1);
 
 			.q-img {
 				position: absolute;
@@ -293,14 +300,36 @@ function StartContent() {
 					calc(var(--b)*sin(60deg)) calc(75% - var(--b)*cos(60deg)),
 					calc(var(--b)*sin(60deg)) calc(25% + var(--b)*cos(60deg)),
 					50% var(--b));
-				background: $sp-blue;
-			}
+				background-color: $sp-blue;
 
-			&:active,
-			&:hover {
+				transition: transform 0.1s ease-in-out,
+							background-color 0.1s linear;
+			}
+		}
+
+		.text-herosubheading {
+			position: absolute;
+
+			z-index: 100;
+
+			transition: all 0.1s ease-in-out;
+		}
+
+		&:active,
+		&:hover {
+			.hex {
+				transform: scale(1.3);
+
 				.q-img {
 					opacity: 1;
 				}
+				.hexBorder {
+					background-color: $sp-brightblue;
+					transform: scale(.9);
+				}
+			}
+			.text-herosubheading {
+				transform: translateY(250%);
 			}
 		}
 
@@ -335,6 +364,10 @@ function StartContent() {
 				}
 			}
 		}
+	}
+
+	#servicesContent {
+		background-color: $black;
 	}
 }
 </style>
