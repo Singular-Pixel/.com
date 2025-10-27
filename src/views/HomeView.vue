@@ -72,9 +72,20 @@
 				<div class="gt-md col-auto"></div>
 			</div>
 			<div id="servicesContent" class="q-px-lg row justify-center full-height">
+				<ServicesHexGrid />
 				<div class="gt-sm col-auto"></div>
 				<div class="col-xs-12 col-lg-8 flexCenter vert">
-					
+					<div class="cardsContainer row justify-center">
+						<div class="col q-mx-lg q-pa-lg cardCol observe observerFadeInUp" data-observeDelay="300ms">
+
+						</div>
+						<div class="col q-mx-lg q-pa-lg cardCol observe observerFadeInUp" data-observeDelay="600ms">
+							
+						</div>
+						<div class="col q-mx-lg q-pa-lg cardCol observe observerFadeInUp" data-observeDelay="900ms">
+							
+						</div>
+					</div>
 				</div>
 				<div class="gt-sm col-auto"></div>
 			</div>
@@ -88,6 +99,7 @@ import { useQuasar } from 'quasar';
 
 import HeroHexGrid from '@/components/HeroHexGrid.vue';
 import HexGlobe from '@/components/HexGlobe.vue';
+import ServicesHexGrid from '@/components/ServicesHexGrid.vue';
 
 const $q = useQuasar();
 
@@ -180,7 +192,7 @@ function StartContent() {
 		width: 100%;
 
 		background: $black;
-		box-shadow: rgba($white, 0.14) 0px 10px 20px, rgba($white, 0.18) 0px 6px 6px;
+		box-shadow: rgba($white, 0.04) 0px 10px 20px, rgba($white, 0.08) 0px 6px 6px;
 
 		z-index: 1000;
 
@@ -209,6 +221,10 @@ function StartContent() {
 			display: flex;
 			justify-content: flex-end;
 			width: 100%;
+
+			.q-btn {
+				margin-right: 16px;
+			}
 
 			body.screen--xs &,
 			body.screen--sm & {
@@ -367,7 +383,39 @@ function StartContent() {
 	}
 
 	#servicesContent {
+		position: relative;
+
 		background-color: $black;
+
+		.cardsContainer {
+			width: 100%;
+
+			z-index: 1;
+		}
+		.cardCol {
+			display: block;
+			height: 500px;
+
+			background: $black;
+			border: 1px solid rgba($sp-brightblue, 0.75);
+			border-radius: 16px;
+		}
+
+		/*&:after {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0.05;
+
+			content: '';
+
+			background: url(@/assets/images/database-cog-outline.svg) center center no-repeat;
+			background-size: auto 75%;
+
+			transform:translateX(-25%) translateY(0) rotate(-30deg);
+		}*/
 	}
 }
 </style>
