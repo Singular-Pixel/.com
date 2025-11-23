@@ -148,10 +148,11 @@ svg {
 	}
 }
 .text-herosubheading {
-	@include corefont();
-	font-weight: 400;
-	font-size: 2rem;
-	line-height: 1.2em;
+	@include titlefont();
+	font-weight: 800;
+	font-size: 1.75rem;
+	line-height: 1em;
+	text-transform: uppercase;
 
 	body.screen--xs &,
 	body.screen--sm & {
@@ -159,7 +160,7 @@ svg {
 	}
 	body.screen--md &,
 	body.screen--lg & {
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 	}
 }
 
@@ -180,7 +181,7 @@ svg {
 	font-weight: 400;
 	font-size: 1rem;
 	letter-spacing: .03125em;
-	line-height: 1.2em;
+	line-height: 1.4em;
 }
 .text-caption {
 	@include titlefont();

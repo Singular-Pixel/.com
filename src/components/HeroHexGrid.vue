@@ -2,6 +2,8 @@
 	<canvas id="heroCanvas" ref="canvas" class="fillParent"></canvas>
 
 	<QImg id="heroLogo" class="canHide" src="@/assets/images/Logo-Vert-OnDark.svg" fit="contain" position="center center" no-spinner />
+
+	<QBtn id="skipBtn" class="q-px-lg titleFont" size="18px" flat label="Skip" @click="QuickHide" />
 </template>
 
 <script setup>
@@ -500,6 +502,17 @@ function AnimateOut() {
 		emit('heroFinished');
 	}, offset * 1000);
 }
+function QuickHide() {
+	document.getElementById('heroLogo').classList.add('hide');
+	gsap.to(canvas.value, {
+		opacity: 0,
+		ease: 'none',
+		duration: 0.25
+	});
+	setTimeout(() => {
+		emit('heroFinished');
+	}, 250);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -512,5 +525,10 @@ function AnimateOut() {
 		max-height: 30vh;
 
 		transform: translateX(-50%);
+	}
+	#skipBtn {
+		position: absolute;
+		bottom: 20px;
+		right: 6px;
 	}
 </style>

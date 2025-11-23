@@ -37,7 +37,19 @@
 					<h1 class="q-mt-xl q-px-md text-hero text-center">
 						<span class="observe observerFadeInUp" data-observeDelay="500ms">Crafting custom web solutions</span>
 						<br>
-						<span class="observe observerFadeInUp" data-observeDelay="1000ms">for your business</span>
+						<span class="observe observerFadeInUp" data-observeDelay="1000ms">for your 
+							<div class='rotatingTextWrapper'>
+								<div class='rotatingText'>
+									business<br/>
+									storefront<br/>
+									experience<br/>
+									exhibit<br/>
+									festival<br/>
+									trade show<br/>
+									concert<br/>
+									business</div>
+							</div>
+						</span>
 					</h1>
 					<div class="q-mt-xl row justify-center">
 						<div class="col-auto q-pa-xl q-mx-xl q-mt-xxl hexCol">
@@ -71,19 +83,59 @@
 				</div>
 				<div class="gt-md col-auto"></div>
 			</div>
-			<div id="servicesContent" class="q-px-lg row justify-center full-height">
+			<div id="servicesContent" class="q-px-lg q-py-xl row justify-center">
 				<ServicesHexGrid />
 				<div class="gt-sm col-auto"></div>
-				<div class="col-xs-12 col-lg-8 flexCenter vert">
-					<div class="cardsContainer row justify-center">
-						<div class="col q-mx-lg q-pa-lg cardCol observe observerFadeInUp" data-observeDelay="300ms">
-
+				<div class="q-py-xl col-xs-12 col-lg-8 flexCenter vert">
+					<div class="q-mt-xl row">
+						<div class="col-xs-12">
+							<h1 class="q-px-md text-heading text-uppercase text-center">
+								<span class="observe observerFadeInUp" data-observeDelay="300ms">Our Services</span>
+							</h1>
 						</div>
-						<div class="col q-mx-lg q-pa-lg cardCol observe observerFadeInUp" data-observeDelay="600ms">
-							
+					</div>
+					<div class="q-mt-md row justify-center">
+						<div class="col-xs-12 col-sm-8">
+							<p class="q-px-md text-body text-center">
+								<span class="observe observerFadeInUp" data-observeDelay="500ms">From first sketch to lasting impact, we turn bold ideas into digital experiences that grow with you.</span>
+							</p>
 						</div>
-						<div class="col q-mx-lg q-pa-lg cardCol observe observerFadeInUp" data-observeDelay="900ms">
-							
+					</div>
+					<div class="q-my-xl cardsContainer row justify-center">
+						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="300ms">
+							<div class="q-pa-lg cardContent planning">
+								<h1 class="text-heading text-uppercase">Concept,<br/>Planning,<br/>Strategy</h1>
+							</div>
+						</div>
+						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="600ms">
+							<div class="q-pa-lg cardContent development">
+								<h1 class="text-heading text-uppercase">Wireframing,<br/>Development,<br/>Hosting</h1>
+							</div>
+						</div>
+						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="900ms">
+							<div class="q-pa-lg cardContent support">
+								<h1 class="text-heading text-uppercase">Installation,<br/>Support,<br/>Analytics</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="gt-sm col-auto"></div>
+			</div>
+			<div id="platformContent" class="q-px-lg q-py-xl row justify-center">
+				<div class="gt-sm col-auto"></div>
+				<div class="q-py-xl col-xs-12 col-lg-8 flexCenter vert">
+					<div class="q-mt-xl row">
+						<div class="col-xs-12">
+							<h1 class="q-px-md text-heading text-uppercase text-center">
+								<span class="observe observerFadeInUp" data-observeDelay="300ms">Our Platform</span>
+							</h1>
+						</div>
+					</div>
+					<div class="q-mt-md row justify-center">
+						<div class="col-xs-12 col-sm-8">
+							<p class="q-px-md text-body text-center">
+								<span class="observe observerFadeInUp" data-observeDelay="500ms">Transforming content management into measurable impact with real-time analytics and actionable insights.</span>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -146,7 +198,23 @@ function StartContent() {
 			}
 			observer.observe(ele);
 		});
+
+		let cardContainer = document.querySelector('#servicesContent');
+		let cards = document.querySelectorAll('.cardCol');
+
+		cardContainer.addEventListener('mousemove', (evt) => {
+			cards.forEach((card) => {
+				let rect = card.getBoundingClientRect();
+				let x = evt.clientX - rect.left;
+				let y = evt.clientY - rect.top;
+
+				card.style.setProperty('--xPos', `${x}px`);
+				card.style.setProperty('--yPos', `${y}px`);
+			});
+		});
 	});
+
+	
 }
 </script>
 
@@ -265,6 +333,33 @@ function StartContent() {
 		}
 	}
 
+	.rotatingTextWrapper {
+		display: inline-block;
+		position: relative;
+		top: 10px;
+		left: 0;
+		height: 1em;
+
+		text-align: left;
+		
+		overflow: hidden;
+		width: max-content;
+	}
+	.rotatingText {
+		display: inline-block;
+		position: relative;
+		top: 0;
+		left: 0;
+
+		color: $sp-brightblue;
+		line-height: 1em;
+
+		animation: rotateText 20s;
+		animation-delay: 1s;
+		animation-iteration-count: infinite;
+		animation-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
+	}
+
 	.hexCol {
 		body.screen--xs &,
 		body.screen--sm & {
@@ -345,7 +440,7 @@ function StartContent() {
 				}
 			}
 			.text-herosubheading {
-				transform: translateY(250%);
+				transform: translateY(320%);
 			}
 		}
 
@@ -387,35 +482,106 @@ function StartContent() {
 
 		background-color: $black;
 
+		&:hover {
+			.cardCol {
+				background: radial-gradient(100rem circle at var(--xPos) var(--yPos), rgba($sp-brightblue, 0.5), transparent 15%);
+			}
+		}
+
 		.cardsContainer {
 			width: 100%;
 
 			z-index: 1;
 		}
 		.cardCol {
-			display: block;
-			height: 500px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			height: 200px;
 
-			background: $black;
-			border: 1px solid rgba($sp-brightblue, 0.75);
 			border-radius: 16px;
+
+			background: radial-gradient(150rem circle at 0 0, rgba($sp-brightblue, 0), transparent 0%);
+
+			.cardContent {
+				position: relative;
+				width: calc(100% - 4px);
+				height: calc(100% - 4px);
+
+				background: $black;
+				border: 1px solid rgba($sp-blue, 0.5);
+				border-radius: inherit;
+
+				.text-heading {
+					position: relative;
+					font-size: 1.5rem;
+					line-height: 1.4em;
+				}
+
+				&:before {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					opacity: 0.25;
+
+					content: '';
+
+					filter: blur(2px);
+
+					background-position: center center;
+					background-repeat: no-repeat;
+					background-size: cover;
+
+					border-radius: inherit;
+				}
+
+				&.planning:before {
+					background-image: url(@/assets/images/Services-Planning.webp);
+				}
+				&.development:before {
+					background-image: url(@/assets/images/Services-Development.webp);
+				}
+				&.support:before {
+					background-image: url(@/assets/images/Services-Support.webp);
+				}
+			}
 		}
+	}
+}
 
-		/*&:after {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			opacity: 0.05;
-
-			content: '';
-
-			background: url(@/assets/images/database-cog-outline.svg) center center no-repeat;
-			background-size: auto 75%;
-
-			transform:translateX(-25%) translateY(0) rotate(-30deg);
-		}*/
+@keyframes rotateText {
+	0% {
+		top: 0%;
+	}
+	13%{
+		top: -100%;
+	}
+	25% {
+		top: -200%;
+	}
+	38% {
+		top: -300%;
+	}
+	50% {
+		top: -400%;
+	}
+	63% {
+		top: -500%;
+	}
+	75% {
+		top: -600%;
+	}
+	86% {
+		top: -700%;
+	}
+	99.99999% {
+		top: -700%;
+	}
+	100% {
+		top: 0%;
 	}
 }
 </style>
