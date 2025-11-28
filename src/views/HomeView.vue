@@ -19,11 +19,11 @@
 						<QImg src="@/assets/images/Logo-Horiz-OnDark.svg" height="60px" fit="contain" position="left center" no-spinner />
 					</div>
 					<div v-if="$q.screen.gt.sm" class="toolbarCenter">
-						<QBtn class="q-px-lg titleFont" size="18px" flat label="Services" />
-						<QBtn class="q-px-lg titleFont" size="18px" flat label="Platform" />
+						<QBtn class="q-px-lg titleFont" size="18px" flat label="Services" @click="ScrollToServices" />
+						<QBtn class="q-px-lg titleFont" size="18px" flat label="Platform" @click="ScrollToPlatform" />
 					</div>
 					<div class="toolbarRight">
-						<QBtn class="q-px-xl titleFont" size="18px" color="secondary" :label="'Get' + (($q.screen.gt.sm) ? '&nbsp;': ' ') + 'Started'" />
+						<QBtn class="q-px-xl titleFont" size="18px" color="secondary" :label="'Get' + (($q.screen.gt.sm) ? '&nbsp;': ' ') + 'Started'" @click="ScrollToContact" />
 					</div>
 				</QToolbar>
 			</div>
@@ -83,21 +83,21 @@
 				</div>
 				<div class="gt-md col-auto"></div>
 			</div>
-			<div id="servicesContent" class="q-px-lg q-py-xl row justify-center">
-				<ServicesHexGrid />
+			<div id="servicesContent" class="q-px-lg q-py-xl q-mb-xl row justify-center">
+				<FlatHexGrid />
 				<div class="gt-sm col-auto"></div>
 				<div class="q-py-xl col-xs-12 col-lg-8 flexCenter vert">
-					<div class="q-mt-xl row">
+					<div class="q-mt-lg row full-width justify-center">
 						<div class="col-xs-12">
-							<h1 class="q-px-md text-heading text-uppercase text-center">
-								<span class="observe observerFadeInUp" data-observeDelay="300ms">Our Services</span>
+							<h1 class="q-px-md text-heading text-uppercase text-center observe observerFadeInUp" data-observeDelay="300ms">
+								<span>Our Services</span>
 							</h1>
 						</div>
 					</div>
-					<div class="q-mt-md row justify-center">
-						<div class="col-xs-12 col-sm-8">
-							<p class="q-px-md text-body text-center">
-								<span class="observe observerFadeInUp" data-observeDelay="500ms">From first sketch to lasting impact, we turn bold ideas into digital experiences that grow with you.</span>
+					<div class="q-mt-md row full-width justify-center">
+						<div class="col-xs-12 col-sm-8 col-lg-6">
+							<p class="q-px-md text-body text-center observe observerFadeInUp" data-observeDelay="500ms">
+								<span>From first sketch to lasting impact, we turn bold ideas into digital experiences that grow with you.</span>
 							</p>
 						</div>
 					</div>
@@ -118,24 +118,190 @@
 							</div>
 						</div>
 					</div>
+					<div class="q-mt-lg row full-width justify-center">
+						<div class="col-xs-12 col-sm-8 col-lg-6">
+							<p class="q-px-md q-mb-md text-body text-center observe observerFadeInUp" data-observeDelay="500ms">
+								<span>Organizations where our work can be seen include:</span>
+							</p>
+						</div>
+						<div id="logoScroller" class="col-xs-12">
+							<div id="logoScrollerContent" class="observe observerFadeInUp" data-observeDelay="500ms">
+								<div id="logoScrollerItems">
+									<img class="logoItem" src="@/assets/logos/343.png" alt="343 Industries Logo" />
+									<img class="logoItem" src="@/assets/logos/Argosy.svg" alt="Argosy Cruises Logo" />
+									<img class="logoItem" src="@/assets/logos/Funko.svg" alt="Funko Logo" />
+									<img class="logoItem" src="@/assets/logos/Genie.svg" alt="Genie Logo" />
+									<img class="logoItem" src="@/assets/logos/Kenworth.svg" alt="Kenworth Logo" />
+									<img class="logoItem" src="@/assets/logos/Leatherback.png" alt="Leatherback Printing Logo" />
+									<img class="logoItem" src="@/assets/logos/Mastercard.svg" alt="Mastercard Logo" />
+									<img class="logoItem" src="@/assets/logos/Microsoft.svg" alt="Microsoft Logo" />
+									<img class="logoItem" src="@/assets/logos/PACCAR.svg" alt="PACCAR Logo" />
+									<img class="logoItem" src="@/assets/logos/STCU.svg" alt="STCU Logo" />
+									<img class="logoItem" src="@/assets/logos/XGS.png" alt="Xbox Game Studios Logo" />
+									<img class="logoItem" src="@/assets/logos/343.png" alt="343 Industries Logo" />
+									<img class="logoItem" src="@/assets/logos/Argosy.svg" alt="Argosy Cruises Logo" />
+									<img class="logoItem" src="@/assets/logos/Funko.svg" alt="Funko Logo" />
+									<img class="logoItem" src="@/assets/logos/Genie.svg" alt="Genie Logo" />
+									<img class="logoItem" src="@/assets/logos/Kenworth.svg" alt="Kenworth Logo" />
+									<img class="logoItem" src="@/assets/logos/Leatherback.png" alt="Leatherback Printing Logo" />
+									<img class="logoItem" src="@/assets/logos/Mastercard.svg" alt="Mastercard Logo" />
+									<img class="logoItem" src="@/assets/logos/Microsoft.svg" alt="Microsoft Logo" />
+									<img class="logoItem" src="@/assets/logos/PACCAR.svg" alt="PACCAR Logo" />
+									<img class="logoItem" src="@/assets/logos/STCU.svg" alt="STCU Logo" />
+									<img class="logoItem" src="@/assets/logos/XGS.png" alt="Xbox Game Studios Logo" />
+									<img class="logoItem" src="@/assets/logos/343.png" alt="343 Industries Logo" />
+									<img class="logoItem" src="@/assets/logos/Argosy.svg" alt="Argosy Cruises Logo" />
+									<img class="logoItem" src="@/assets/logos/Funko.svg" alt="Funko Logo" />
+									<img class="logoItem" src="@/assets/logos/Genie.svg" alt="Genie Logo" />
+									<img class="logoItem" src="@/assets/logos/Kenworth.svg" alt="Kenworth Logo" />
+									<img class="logoItem" src="@/assets/logos/Leatherback.png" alt="Leatherback Printing Logo" />
+									<img class="logoItem" src="@/assets/logos/Mastercard.svg" alt="Mastercard Logo" />
+									<img class="logoItem" src="@/assets/logos/Microsoft.svg" alt="Microsoft Logo" />
+									<img class="logoItem" src="@/assets/logos/PACCAR.svg" alt="PACCAR Logo" />
+									<img class="logoItem" src="@/assets/logos/STCU.svg" alt="STCU Logo" />
+									<img class="logoItem" src="@/assets/logos/XGS.png" alt="Xbox Game Studios Logo" />
+									<img class="logoItem" src="@/assets/logos/343.png" alt="343 Industries Logo" />
+									<img class="logoItem" src="@/assets/logos/Argosy.svg" alt="Argosy Cruises Logo" />
+									<img class="logoItem" src="@/assets/logos/Funko.svg" alt="Funko Logo" />
+									<img class="logoItem" src="@/assets/logos/Genie.svg" alt="Genie Logo" />
+									<img class="logoItem" src="@/assets/logos/Kenworth.svg" alt="Kenworth Logo" />
+									<img class="logoItem" src="@/assets/logos/Leatherback.png" alt="Leatherback Printing Logo" />
+									<img class="logoItem" src="@/assets/logos/Mastercard.svg" alt="Mastercard Logo" />
+									<img class="logoItem" src="@/assets/logos/Microsoft.svg" alt="Microsoft Logo" />
+									<img class="logoItem" src="@/assets/logos/PACCAR.svg" alt="PACCAR Logo" />
+									<img class="logoItem" src="@/assets/logos/STCU.svg" alt="STCU Logo" />
+									<img class="logoItem" src="@/assets/logos/XGS.png" alt="Xbox Game Studios Logo" />
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="gt-sm col-auto"></div>
 			</div>
-			<div id="platformContent" class="q-px-lg q-py-xl row justify-center">
+			<div id="platformContent" class="q-px-lg q-py-xl q-mb-xl row justify-center">
 				<div class="gt-sm col-auto"></div>
 				<div class="q-py-xl col-xs-12 col-lg-8 flexCenter vert">
-					<div class="q-mt-xl row">
+					<div class="q-mt-lg row">
 						<div class="col-xs-12">
-							<h1 class="q-px-md text-heading text-uppercase text-center">
-								<span class="observe observerFadeInUp" data-observeDelay="300ms">Our Platform</span>
+							<h1 class="q-px-md q-mb-lg text-heading text-uppercase text-center observe observerFadeInUp" data-observeDelay="300ms">
+								<span>Our Platform<span class="text-caption comingSoon">(coming soon)</span></span>
 							</h1>
 						</div>
 					</div>
 					<div class="q-mt-md row justify-center">
 						<div class="col-xs-12 col-sm-8">
-							<p class="q-px-md text-body text-center">
-								<span class="observe observerFadeInUp" data-observeDelay="500ms">Transforming content management into measurable impact with real-time analytics and actionable insights.</span>
+							<p class="q-px-md text-body text-center observe observerFadeInUp" data-observeDelay="500ms">
+								<span>Transforming content management into measurable impact with real&#8209;time analytics and actionable insights.</span>
 							</p>
+						</div>
+					</div>
+					<div class="q-my-xl cardsContainer row justify-center">
+						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="300ms">
+							<div class="q-pa-lg cardContent hosting">
+								<h1 class="text-heading text-uppercase">Custom Domains,<br/>Hosting,<br/>Security</h1>
+							</div>
+						</div>
+						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="600ms">
+							<div class="q-pa-lg cardContent content">
+								<h1 class="text-heading text-uppercase">Drag & Drop Content and Asset Management,<br/>Generative AI Tools</h1>
+							</div>
+						</div>
+						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="900ms">
+							<div class="q-pa-lg cardContent analytics">
+								<h1 class="text-heading text-uppercase">Analytics,<br/>User Tracking,<br/>Insights</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="gt-sm col-auto"></div>
+			</div>
+			<div id="contactContent" class="q-px-lg q-py-xl row justify-center">
+				<FlatHexGrid />
+				<div class="gt-sm col-auto"></div>
+				<div class="q-py-xl col-xs-12 col-lg-8 flexCenter vert">
+					<div class="q-mt-lg row">
+						<div class="col-xs-12">
+							<h1 class="q-px-md text-heading text-uppercase text-center observe observerFadeInUp" data-observeDelay="300ms">
+								<span>Get Started</span>
+							</h1>
+						</div>
+					</div>
+					<div class="q-mt-md row justify-center">
+						<div class="gt-xs col-auto"></div>
+						<div class="col-xs-12 col-sm-8 flexCenter vert">
+							<p class="q-px-md q-pb-md text-body text-center observe observerFadeInUp" data-observeDelay="500ms">
+								<span>Ready to elevate your digital presence?<br/><br/>Contact us today to discuss your project and discover how we can help bring your vision to life.</span>
+							</p>
+							<QForm id="contactForm" class="q-pa-md full-width observe observerFadeInUp" data-observeDelay="500ms" @submit.prevent>
+								<QInput v-model="contactName" dark class="q-mb-md" filled label-slot clearable clear-icon="mdi-close" :rules="contactNameRules">
+									<template v-slot:label>
+										<span>Name <span class="text-negative">*</span></span>
+									</template>
+								</QInput>
+								<QInput v-model="contactCompany" dark class="q-mb-md" filled label="Company" clearable clear-icon="mdi-close" bottom-slots>
+									<template v-slot:error>
+										<span><!--Empty error slot so this input has the same padding as the rest--></span>
+									</template>
+								</QInput>
+								<QInput v-model="contactEmail" dark class="q-mb-md" filled label-slot type="email" clearable clear-icon="mdi-close" :rules="contactEmailRules">
+									<template v-slot:label>
+										<span>Email <span class="text-negative">*</span></span>
+									</template>
+								</QInput>
+
+								<p class="q-mt-sm text-body">What can we help you with?</p>
+								<QSelect
+									v-model="contactProjectType"
+									:options="[
+										'Standard Website',
+										'Storefront or Sinage',
+										'Interactive Kiosk',
+										'Custom Web Application',
+										'Digital Experience for Event or Exhibit',
+										'Other'
+									]"
+									label-slot
+									class="q-mb-md"
+									dark
+									filled
+									clearable
+									clear-icon="mdi-close"
+									:rules="contactProjectTypeRules">
+									<template v-slot:label>
+										<span>Project Type <span class="text-negative">*</span></span>
+									</template>
+								</QSelect>
+								<QInput v-model="contactDetails" dark class="q-mb-md" filled label="Any extra details and/or comments you'd like us to have?" type="textarea" clearable clear-icon="mdi-close" />
+								<div class="q-mt-md row justify-center">
+									<QBtn class="q-px-xl" color="secondary" label="Submit" type="submit" />
+								</div>
+							</QForm>
+						</div>
+						<div class="gt-xs col-auto"></div>
+					</div>
+				</div>
+				<div class="gt-sm col-auto"></div>
+			</div>
+			<div id="footerContent" class="q-px-lg q-py-xl row justify-center">
+				<div class="gt-sm col-auto"></div>
+				<div class="col-xs-12 col-lg-8 flexCenter vert">
+					<div class="q-py-lg row full-width">
+						<div class="col-xs-12 col-sm-8 flexCenter vert">
+							<QImg src="@/assets/images/Logo-HorizTag-OnDark.svg" height="120px" fit="contain" position="left center" no-spinner />
+						</div>
+						<div class="col-xs-12 col-sm-4">
+							<h2 class="q-mb-md text-subheading text-uppercase">Stay Connected</h2>
+							<p class="text-caption">Subscribe to our newsletter for the latest updates, insights, and offerings. We promise to never spam you.</p>
+							<QForm id="subscribeForm">
+								<QInput v-model="subscribeEmail" dark class="q-mt-md" dense filled square label-slot type="email" clearable clear-icon="mdi-close" :rules="subscribeEmailRules">
+									<template v-slot:label>
+										<span>Email <span class="text-negative">*</span></span>
+									</template>
+									<template v-slot:after>
+										<QBtn class="q-px-lg" color="secondary" label="Subscribe" type="submit" />
+									</template>
+								</QInput>
+							</QForm>
 						</div>
 					</div>
 				</div>
@@ -151,9 +317,31 @@ import { useQuasar } from 'quasar';
 
 import HeroHexGrid from '@/components/HeroHexGrid.vue';
 import HexGlobe from '@/components/HexGlobe.vue';
-import ServicesHexGrid from '@/components/ServicesHexGrid.vue';
+import FlatHexGrid from '@/components/FlatHexGrid.vue';
 
 const $q = useQuasar();
+
+const contactName = ref(null);
+const contactCompany = ref(null);
+const contactEmail = ref(null);
+const contactProjectType = ref(null);
+const contactDetails = ref(null);
+
+const contactNameRules = [
+	val => (val && val.length > 0) || "Your name is required!"
+];
+const contactEmailRules = [
+	val => (val && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(val)) || "A valid email is required!"
+];
+const contactProjectTypeRules = [
+	val => (val && val.length > 0) || "Please select a project type!"
+];
+
+const subscribeEmail = ref(null);
+
+const subscribeEmailRules = [
+	val => (val && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(val)) || "A valid email is required!"
+];
 
 let debug = {
 	controls: false,
@@ -199,11 +387,25 @@ function StartContent() {
 			observer.observe(ele);
 		});
 
-		let cardContainer = document.querySelector('#servicesContent');
-		let cards = document.querySelectorAll('.cardCol');
+		let serviceCardContainer = document.querySelector('#servicesContent');
+		let serviceCards = document.querySelectorAll('.cardCol');
 
-		cardContainer.addEventListener('mousemove', (evt) => {
-			cards.forEach((card) => {
+		serviceCardContainer.addEventListener('mousemove', (evt) => {
+			serviceCards.forEach((card) => {
+				let rect = card.getBoundingClientRect();
+				let x = evt.clientX - rect.left;
+				let y = evt.clientY - rect.top;
+
+				card.style.setProperty('--xPos', `${x}px`);
+				card.style.setProperty('--yPos', `${y}px`);
+			});
+		});
+
+		let platformCardContainer = document.querySelector('#platformContent');
+		let platformCards = document.querySelectorAll('.cardCol');
+
+		platformCardContainer.addEventListener('mousemove', (evt) => {
+			platformCards.forEach((card) => {
 				let rect = card.getBoundingClientRect();
 				let x = evt.clientX - rect.left;
 				let y = evt.clientY - rect.top;
@@ -213,8 +415,27 @@ function StartContent() {
 			});
 		});
 	});
+}
 
-	
+function ScrollToServices() {
+	let servicesSection = document.querySelector('#servicesContent');
+	if (servicesSection) {
+		servicesSection.scrollIntoView({ behavior: 'smooth' });
+	}
+}
+
+function ScrollToPlatform() {
+	let platformSection = document.querySelector('#platformContent');
+	if (platformSection) {
+		platformSection.scrollIntoView({ behavior: 'smooth' });
+	}
+}
+
+function ScrollToContact() {
+	let contactSection = document.querySelector('#contactContent');
+	if (contactSection) {
+		contactSection.scrollIntoView({ behavior: 'smooth' });
+	}
 }
 </script>
 
@@ -378,8 +599,6 @@ function StartContent() {
 	.hexContainer {
 		position: relative;
 		width: 216.5px;
-		
-		cursor: pointer;
 
 		.hex {
 			position: relative;
@@ -487,67 +706,148 @@ function StartContent() {
 				background: radial-gradient(100rem circle at var(--xPos) var(--yPos), rgba($sp-brightblue, 0.5), transparent 15%);
 			}
 		}
+	}
+	#platformContent {
+		position: relative;
 
-		.cardsContainer {
+		&:hover {
+			.cardCol {
+				background: radial-gradient(100rem circle at var(--xPos) var(--yPos), rgba($sp-brightblue, 0.5), transparent 15%);
+			}
+		}
+
+		.text-heading {
+			display: inline-block;
+			position: relative;
+
+			.comingSoon {
+				display: block;
+				position: absolute;
+				left: 50%;
+
+				transform: translateX(-50%);
+			}
+		}
+	}
+	#contactContent {
+		position: relative;
+
+		background-color: $black;
+
+		h1 {
+			display: inline-block;
 			width: 100%;
 
-			z-index: 1;
+			transform: translateX(-3px); //Font has slight left spacing, line it back up
 		}
-		.cardCol {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+	}
+	#contactForm {
+		background-color: rgba($black, 0.9);
+
+		border: 1px solid rgba($sp-blue, 0.5);
+		border-radius: 8px;
+
+		textarea {
+			resize: none;
+		}
+	}
+
+	#footerContent {
+		position: relative;
+
+		background: linear-gradient(to bottom, #2E5F9C, #394E7B, #393F5C, #31313F, #252525);
+		border-top: 2px solid $sp-blue;
+	}
+
+	.cardsContainer {
+		width: 100%;
+
+		z-index: 1;
+	}
+	.cardCol {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		height: 200px;
+
+		border-radius: 16px;
+
+		background: radial-gradient(150rem circle at 0 0, rgba($sp-brightblue, 0), transparent 0%);
+
+		.cardContent {
 			position: relative;
-			height: 200px;
+			width: calc(100% - 4px);
+			height: calc(100% - 4px);
 
-			border-radius: 16px;
+			background: $black;
+			border: 1px solid rgba($sp-blue, 0.5);
+			border-radius: inherit;
 
-			background: radial-gradient(150rem circle at 0 0, rgba($sp-brightblue, 0), transparent 0%);
-
-			.cardContent {
+			.text-heading {
 				position: relative;
-				width: calc(100% - 4px);
-				height: calc(100% - 4px);
-
-				background: $black;
-				border: 1px solid rgba($sp-blue, 0.5);
-				border-radius: inherit;
-
-				.text-heading {
-					position: relative;
-					font-size: 1.5rem;
-					line-height: 1.4em;
-				}
-
-				&:before {
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					opacity: 0.25;
-
-					content: '';
-
-					filter: blur(2px);
-
-					background-position: center center;
-					background-repeat: no-repeat;
-					background-size: cover;
-
-					border-radius: inherit;
-				}
-
-				&.planning:before {
-					background-image: url(@/assets/images/Services-Planning.webp);
-				}
-				&.development:before {
-					background-image: url(@/assets/images/Services-Development.webp);
-				}
-				&.support:before {
-					background-image: url(@/assets/images/Services-Support.webp);
-				}
+				font-size: 1.5rem;
+				line-height: 1.4em;
 			}
+
+			&:before {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0.25;
+
+				content: '';
+
+				filter: blur(2px);
+
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: cover;
+
+				border-radius: inherit;
+			}
+
+			&.planning:before {
+				background-image: url(@/assets/images/Services-Planning.webp);
+			}
+			&.development:before {
+				background-image: url(@/assets/images/Services-Development.webp);
+			}
+			&.support:before {
+				background-image: url(@/assets/images/Services-Support.webp);
+			}
+			&.hosting:before {
+				background-image: url(@/assets/images/Platform-Hosting.webp);
+			}
+			&.content:before {
+				background-image: url(@/assets/images/Platform-Content.webp);
+			}
+			&.analytics:before {
+				background-image: url(@/assets/images/Platform-Analytics.webp);
+			}
+		}
+	}
+
+	#logoScrollerContent {
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+		height: 100px;
+	}
+	#logoScrollerItems {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		width: 500vw;
+
+		will-change: transform;
+		animation: scrollLogos 120s linear 0s normal infinite;
+
+		.logoItem {
+			max-width: 150px;
+			max-height: 80px;
 		}
 	}
 }
@@ -582,6 +882,11 @@ function StartContent() {
 	}
 	100% {
 		top: 0%;
+	}
+}
+@keyframes scrollLogos {
+	100% {
+		transform: translateX(calc(500vw * -0.5));
 	}
 }
 </style>

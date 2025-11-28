@@ -107,6 +107,30 @@ svg {
 		transform: translateY(0px);
 	}
 }
+.observerFadeInLeft {
+	opacity: 0;
+	transform: translateX(40px);
+
+	transition: opacity 0.75s ease-in,
+				transform 0.75s ease-in;
+	
+	&.show {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+}
+.observerFadeInRight {
+	opacity: 0;
+	transform: translateX(-40px);
+
+	transition: opacity 0.75s ease-in,
+				transform 0.75s ease-in;
+	
+	&.show {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+}
 
 .colorScrollbars {
 	scrollbar-color: $sp-brightblue $black;
@@ -184,11 +208,11 @@ svg {
 	line-height: 1.4em;
 }
 .text-caption {
-	@include titlefont();
-	font-weight: 800;
+	@include corefont();
+	font-weight: 400;
 	font-size: .75rem;
-	letter-spacing: .03333em;
-	line-height: 1.2em;
+	letter-spacing: .03125em;
+	line-height: 1.4em;
 }
 /*#endregion*/
 

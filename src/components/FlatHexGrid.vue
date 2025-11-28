@@ -1,5 +1,5 @@
 <template>
-	<canvas id="servicesCanvas" ref="canvas" class="fillParent"></canvas>
+	<canvas ref="canvas" class="hexCanvas fillParent"></canvas>
 </template>
 
 <script setup>
@@ -84,7 +84,7 @@ function DrawHex(centerX, centerY) {
 </script>
 
 <style lang="scss" scoped>
-#servicesCanvas {
+.hexCanvas {
 	opacity: 0.1;
 }
 </style>
