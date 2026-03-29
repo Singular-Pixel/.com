@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { Quasar } from 'quasar';
+import { Quasar, Notify } from 'quasar';
 import quasarIconSet from 'quasar/icon-set/svg-mdi-v7';
 
 import App from './App.vue';
@@ -19,7 +19,9 @@ app.use(Quasar, {
 		}
 	},
 	iconSet: quasarIconSet,
-	plugins: {}
+	plugins: {
+		Notify
+	}
 });
 
 app.mount('#app');

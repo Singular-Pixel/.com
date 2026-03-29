@@ -102,17 +102,17 @@
 						</div>
 					</div>
 					<div class="q-my-xl cardsContainer row justify-center">
-						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="300ms">
+						<div class="col-xs-12 col-lg-4 cardCol observe observerFadeInUp" data-observeDelay="300ms">
 							<div class="q-pa-lg cardContent planning">
 								<h1 class="text-heading text-uppercase">Concept,<br/>Planning,<br/>Strategy</h1>
 							</div>
 						</div>
-						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="600ms">
+						<div class="col-xs-12 col-lg-4 cardCol observe observerFadeInUp" data-observeDelay="600ms">
 							<div class="q-pa-lg cardContent development">
 								<h1 class="text-heading text-uppercase">Wireframing,<br/>Development,<br/>Hosting</h1>
 							</div>
 						</div>
-						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="900ms">
+						<div class="col-xs-12 col-lg-4 cardCol observe observerFadeInUp" data-observeDelay="900ms">
 							<div class="q-pa-lg cardContent support">
 								<h1 class="text-heading text-uppercase">Installation,<br/>Support,<br/>Analytics</h1>
 							</div>
@@ -196,17 +196,17 @@
 						</div>
 					</div>
 					<div class="q-my-xl cardsContainer row justify-center">
-						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="300ms">
+						<div class="col-xs-12 col-lg-4 cardCol observe observerFadeInUp" data-observeDelay="300ms">
 							<div class="q-pa-lg cardContent hosting">
 								<h1 class="text-heading text-uppercase">Custom Domains,<br/>Hosting,<br/>Security</h1>
 							</div>
 						</div>
-						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="600ms">
+						<div class="col-xs-12 col-lg-4 cardCol observe observerFadeInUp" data-observeDelay="600ms">
 							<div class="q-pa-lg cardContent content">
 								<h1 class="text-heading text-uppercase">Drag & Drop Content and Asset Management,<br/>Generative AI Tools</h1>
 							</div>
 						</div>
-						<div class="col q-mx-lg cardCol observe observerFadeInUp" data-observeDelay="900ms">
+						<div class="col-xs-12 col-lg-4 cardCol observe observerFadeInUp" data-observeDelay="900ms">
 							<div class="q-pa-lg cardContent analytics">
 								<h1 class="text-heading text-uppercase">Analytics,<br/>User Tracking,<br/>Insights</h1>
 							</div>
@@ -230,9 +230,15 @@
 						<div class="gt-xs col-auto"></div>
 						<div class="col-xs-12 col-sm-8 flexCenter vert">
 							<p class="q-px-md q-pb-md text-body text-center observe observerFadeInUp" data-observeDelay="500ms">
-								<span>Ready to elevate your digital presence?<br/><br/>Contact us today to discuss your project and discover how we can help bring your vision to life.</span>
+								<span>
+									Ready to elevate your digital presence?
+									<br/><br/>
+									Contact us today to discuss your project and discover how we can help bring your vision to life.
+									<br/><br/>
+									Use the form below, or just contact us directly at: <a class="text-link" href="mailto:contact@singular-pixel.com" target="_blank">contact@singular-pixel.com</a>.
+								</span>
 							</p>
-							<QForm id="contactForm" class="q-pa-md full-width observe observerFadeInUp" data-observeDelay="500ms" @submit.prevent>
+							<QForm id="contactForm" class="q-pa-md full-width observe observerFadeInUp" data-observeDelay="500ms" @submit.prevent="SubmitContactForm">
 								<QInput v-model="contactName" dark class="q-mb-md" filled label-slot clearable clear-icon="mdi-close" :rules="contactNameRules">
 									<template v-slot:label>
 										<span>Name <span class="text-negative">*</span></span>
@@ -292,15 +298,19 @@
 						<div class="col-xs-12 col-sm-4">
 							<h2 class="q-mb-md text-subheading text-uppercase">Stay Connected</h2>
 							<p class="text-caption">Subscribe to our newsletter for the latest updates, insights, and offerings. We promise to never spam you.</p>
-							<QForm id="subscribeForm">
-								<QInput v-model="subscribeEmail" dark class="q-mt-md" dense filled square label-slot type="email" clearable clear-icon="mdi-close" :rules="subscribeEmailRules">
-									<template v-slot:label>
-										<span>Email <span class="text-negative">*</span></span>
-									</template>
-									<template v-slot:after>
+							<QForm id="subscribeForm" @submit.prevent="SubmitSubscribeForm">
+								<div class="row items-center">
+									<div class="col">
+										<QInput v-model="subscribeEmail" dark class="q-mt-md" dense filled square label-slot type="email" clearable clear-icon="mdi-close" :rules="subscribeEmailRules">
+											<template v-slot:label>
+												<span>Email <span class="text-negative">*</span></span>
+											</template>
+										</QInput>
+									</div>
+									<div class="col-auto q-pl-sm q-pb-sm">
 										<QBtn class="q-px-lg" color="secondary" label="Subscribe" type="submit" />
-									</template>
-								</QInput>
+									</div>
+								</div>
 							</QForm>
 						</div>
 					</div>
@@ -312,7 +322,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick, inject } from 'vue';
 import { useQuasar } from 'quasar';
 
 import HeroHexGrid from '@/components/HeroHexGrid.vue';
@@ -320,6 +330,7 @@ import HexGlobe from '@/components/HexGlobe.vue';
 import FlatHexGrid from '@/components/FlatHexGrid.vue';
 
 const $q = useQuasar();
+const $core = inject('$core');
 
 const contactName = ref(null);
 const contactCompany = ref(null);
@@ -415,6 +426,66 @@ function StartContent() {
 			});
 		});
 	});
+}
+
+async function SubmitContactForm() {
+	const web3formsEndpoint = 'https://api.web3forms.com/submit';
+	const web3formsAccessKey = 'fa84ec84-9414-40aa-8105-39b9ef9da81d';
+
+	var name = contactName.value + ((contactCompany.value) ? ` (${contactCompany.value})` : '');
+	var email = contactEmail.value;
+	var message = contactProjectType.value + '\n\n' + contactDetails.value;
+
+	var result = await $core.FetchPostJson(web3formsEndpoint, {
+		access_key: web3formsAccessKey,
+		name: name,
+		email: email,
+		message: message
+	});
+	if (result.success && result.success == true) {
+		$q.notify({
+			color: 'primary',
+			textColor: 'dark',
+			icon: 'mdi-check-circle',
+			message: 'Thanks for reaching out! We will get back to you as soon as we can.'
+		});
+	} else {
+		$q.notify({
+			color: 'negative',
+			textColor: 'dark',
+			icon: 'mdi-exclamation-thick',
+			message: 'Something went wrong while submitting the form. Please try again later, or email us directly at contact@singular-pixel.com'
+		});
+	}
+}
+
+async function SubmitSubscribeForm() {
+	const web3formsEndpoint = 'https://api.web3forms.com/submit';
+	const web3formsAccessKey = 'fa84ec84-9414-40aa-8105-39b9ef9da81d';
+
+	var email = subscribeEmail.value;
+
+	var result = await $core.FetchPostJson(web3formsEndpoint, {
+		access_key: web3formsAccessKey,
+		name: '',
+		email: email,
+		message: "Please subscribe me to the Singular Pixel newsletter."
+	});
+	if (result.success && result.success == true) {
+		$q.notify({
+			color: 'primary',
+			textColor: 'dark',
+			icon: 'mdi-check-circle',
+			message: 'Thanks for subscribing to our newsletter! We\'ll be in touch with updates, insights, and offerings soon.'
+		});
+	} else {
+		$q.notify({
+			color: 'negative',
+			textColor: 'dark',
+			icon: 'mdi-exclamation-thick',
+			message: 'Something went wrong while submitting the form. Please try again later, or email us directly at contact@singular-pixel.com'
+		});
+	}
 }
 
 function ScrollToServices() {
@@ -561,7 +632,7 @@ function ScrollToContact() {
 		left: 0;
 		height: 1em;
 
-		text-align: left;
+		text-align: center;
 		
 		overflow: hidden;
 		width: max-content;
@@ -846,6 +917,7 @@ function ScrollToContact() {
 		animation: scrollLogos 120s linear 0s normal infinite;
 
 		.logoItem {
+			margin: 0 10px;
 			max-width: 150px;
 			max-height: 80px;
 		}

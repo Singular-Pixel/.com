@@ -14,7 +14,7 @@ const core = class AppCore {
 	install(app) {
 		//Attach this library to the global Vue instance
 		app.config.globalProperties.$core = this;
-		app.provide('core', this);
+		app.provide('$core', this);
 
 		//Also attach this library to the window while debugging so we can call it from the browser devtools
 		if (import.meta.env.MODE !== 'production') {
